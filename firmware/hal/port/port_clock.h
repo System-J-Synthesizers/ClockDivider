@@ -1,0 +1,39 @@
+#ifndef PORT_CLOCK_H
+#define PORT_CLOCK_H
+
+void dma1_clock_enable(void);
+void dma2_clock_enable(void);
+void dmamux1_clock_enable(void);
+void crc_clock_enable(void);
+void gpioa_clock_enable(void);
+void gpiob_clock_enable(void);
+void gpioc_clock_enable(void);
+void gpioh_clock_enable(void);
+void pka_clock_enable(void);
+void aes_clock_enable(void);
+void rng_clock_enable(void);
+void hsem_clock_enable(void);
+void ipcc_clock_enable(void);
+void flash_clock_enable(void);
+void tim2_clock_enable(void);
+void rtcapb_clock_enable(void);
+void wwdg_clock_enable(void);
+void spi2_clock_enable(void);
+void usart2_clock_enable(void);
+void i2c1_clock_enable(void);
+void i2c2_clock_enable(void);
+void i2c3_clock_enable(void);
+void dac_clock_enable(void);
+void lptim1_clock_enable(void);
+void lpuart1_clock_enable(void);
+void lptim2_clock_enable(void);
+void lptim3_clock_enable(void);
+void adc_clock_enable(void);
+void tim1_clock_enable(void);
+void spi1_clock_enable(void);
+void usart1_clock_enable(void);
+void tim16_clock_enable(void);
+void tim17_clock_enable(void);
+void subghzspi_clock_enable(void);
+
+#endif /* PORT_CLOCK_H */
