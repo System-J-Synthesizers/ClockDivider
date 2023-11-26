@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define NUM_TIMERS 4U
+#define NUM_TIMERS 10U
 /* specific to the ccu6 chip, other wl55 may be different */
 #define TIMER1 0x00U
 #define TIMER1_CH1 0x00U
@@ -17,16 +17,40 @@
 #define TIMER2_CH3 0x12U
 #define TIMER2_CH4 0x13U
 
-#define TIMER16 0x20U
-#define TIMER16_CH1 0x20U
+#define TIMER3 0x20U
+#define TIMER3_CH1 0x20U
+#define TIMER3_CH2 0x21U
+#define TIMER3_CH3 0x22U
+#define TIMER3_CH4 0x23U
 
-#define TIMER17 0x30U
-#define TIMER17_CH1 0x30U
+#define TIMER4 0x30U
+#define TIMER4_CH1 0x30U
+#define TIMER4_CH2 0x31U
+#define TIMER4_CH3 0x32U
+#define TIMER4_CH4 0x33U
+
+#define TIMER6 0x40U
+
+#define TIMER7 0x50U
+
+#define TIMER8 0x60U
+#define TIMER8_CH1 0x60U
+#define TIMER8_CH2 0x61U
+#define TIMER8_CH3 0x62U
+#define TIMER8_CH4 0x63U
+
+#define TIMER15 0x70U
+#define TIMER15_CH1 0x70U
+#define TIMER15_CH2 0x71U
+
+#define TIMER16 0x80U
+#define TIMER16_CH1 0x80U
+
+#define TIMER17 0x90U
+#define TIMER17_CH1 0x90U
 
 /* STM32 specific */
 #define TIMER_CLK_INTERNAL 0x0000U
-#define TIMER_CLK_ENCODER 0x0001U
-#define TIMER_CLK_TRIGGER 0x0006U
 #define TIMER_CLK_EXTERNAL 0x0007U
 
 #define TIMER_TRGO_RESET 0x0000U

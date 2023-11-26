@@ -1,4 +1,4 @@
-13583238555886
+30001701778435
 00mglib
 200551
 20-0551-2
@@ -20,6 +20,20 @@ Connector
 0
 6
 6
+00mglib
+ABM810000MHZ12D2W
+ABM8
+Crystal or Oscillator
+0
+4
+4
+00mglib
+ABS07
+ABS07
+Crystal or Oscillator
+0
+2
+2
 00mglib
 Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical
 T-S-SN Vertical mount jack AKA WQP-WQP518MA or Thonkiconn
@@ -55,6 +69,62 @@ VTX_12VA
 0
 8
 8
+AudioJacks
+Jack_3.5mm_Cliff_FCR1281_Horizontal
+
+
+0
+4
+4
+AudioJacks
+Jack_3.5mm_QingPu_WQP-PJ301BM_Vertical
+
+
+0
+4
+3
+AudioJacks
+Jack_3.5mm_QingPu_WQP-PJ301CM_Vertical
+
+
+0
+3
+3
+AudioJacks
+Jack_3.5mm_QingPu_WQP-PJ301M-12_Vertical
+
+
+0
+3
+3
+AudioJacks
+Jack_3.5mm_QingPu_WQP-PJ302M_Horizontal
+
+
+0
+3
+3
+AudioJacks
+Jack_3.5mm_QingPu_WQP-PJ366ST_Vertical
+T-R-S Vertical mounting jack AKA WQP-WQP419GR, Stereo Thonkiconn
+WQP-WQP419GR Thonkiconn
+0
+3
+3
+AudioJacks
+Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical
+T-S-SN Vertical mount jack AKA WQP-WQP518MA or Thonkiconn
+WQP-WQP518MA, Thonkiconn
+0
+3
+3
+AudioJacks
+Jack_3.5mm_QingPu_WQP-PJ3410_Vertical
+
+
+0
+4
+4
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)

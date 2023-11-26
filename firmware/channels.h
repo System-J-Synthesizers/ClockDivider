@@ -4,7 +4,6 @@
 #include <stdint.h>
 
 #define NUM_CHANNELS 4U
-#define CHANNEL_SEL_EVT 0U
 
 void channel_leds_init(void);
 void channel_init(uint8_t ch);

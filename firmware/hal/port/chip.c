@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "stm32wl55xx.h"
+#include "stm32g441xx.h"
 #include "port_chip.h"
 #include "../hal_chip.h"
 #include "../hal_assert.h"

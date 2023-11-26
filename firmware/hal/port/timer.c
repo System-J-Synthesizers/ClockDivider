@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <stddef.h>
-#include "stm32wl55xx.h"
+#include "stm32g441xx.h"
 #include "port_timer.h"
 #include "../hal_timer.h"
 
@@ -9,9 +9,15 @@
 #define TIMER_GET_CLKSRC(t) ((t) & 0x000FU)
 #define TIMER_GET_MODE(t) ((t) & 0x0F00U)
 #define TIMER_GET_TRGO(t) ((t) & 0x0070U)
-#define TIMER_GET_INPUT(t) ((t) & 0x3000U)
+#define TIMER_GET_INPUT(t) ((t) & 0xF000U)
 
-static TIM_TypeDef *timer_ports[NUM_TIMERS] = {TIM1, TIM2, TIM16, TIM17};
+#define BOTH 0x0AU
+#define FALLING 0x02U
+
+static TIM_TypeDef *timer_ports[NUM_TIMERS] = {
+	TIM1, TIM2, TIM3, TIM4, TIM6,
+	TIM7, TIM8, TIM15, TIM16, TIM17
+};
 
 /** 
  * @brief      Set the SMS bits in the SMCR register
@@ -22,11 +28,19 @@ static TIM_TypeDef *timer_ports[NUM_TIMERS] = {TIM1, TIM2, TIM16, TIM17};
 static void timer_set_clock_source(uint8_t t, uint8_t src) {
 	TIM_TypeDef *tim = NULL;
 
-	switch(t) {
+	switch(t << 4U) {
 		case TIMER1:
 		case TIMER2:
+		case TIMER3:
+		case TIMER4:
+		case TIMER8:	
 			tim = timer_ports[t];
 			tim->SMCR |= (src << TIM_SMCR_SMS_Pos);
+
+			if(src == TIMER_CLK_EXTERNAL) {
+				/* set clock input to TI1FP1 */
+				tim->SMCR |= (5U << TIM_SMCR_TS_Pos);
+			}
 		break;
 
 		default:
@@ -67,7 +81,7 @@ static void timer_output_enable(uint8_t tim) {
 	uint8_t t = TIMER_GET_TIMER(tim);
 	timer_ports[t]->CCER |= (1U << (TIMER_GET_CHANNEL(tim) * 4U)); /* enable the output */
 	
-	if(t == TIMER1) {
+	if((t == TIMER1) || (t == TIMER8)) {
 		timer_ports[t]->BDTR |= TIM_BDTR_MOE; /* master out enable */
 	}
 }
@@ -102,6 +116,22 @@ void timer_init(uint8_t tim, uint16_t config, uint16_t prescaler) {
 	
 	/* set trgo */
 	timer_ports[t]->CR2 |= TIMER_GET_TRGO(config);
+
+	/* set up timer polarity */
+	switch(TIMER_GET_INPUT(config)) {
+		case TIMER_INPUT_FALLING:
+			timer_ports[t]->CCER |= (FALLING << (channel * 4U));
+		break;
+
+		case TIMER_INPUT_BOTH:
+			timer_ports[t]->CCER |= (BOTH << (channel * 4U));
+		break;
+
+		case TIMER_INPUT_RISING:
+		default:
+			/* do nothing, default to rising edge */
+		break;
+	}
 
 	/* set up timer mode */
 	switch(TIMER_GET_MODE(config)) {

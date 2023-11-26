@@ -1,4 +1,4 @@
-#include "stm32wl55xx.h"
+#include "stm32g441xx.h"
 
 void dma1_clock_enable(void) {
     RCC->AHB1ENR |= RCC_AHB1ENR_DMA1EN;
@@ -10,6 +10,18 @@ void dma2_clock_enable(void) {
 
 void dmamux1_clock_enable(void) {
     RCC->AHB1ENR |= RCC_AHB1ENR_DMAMUX1EN;
+}
+
+void cordic_clock_enable(void) {
+    RCC->AHB1ENR |= RCC_AHB1ENR_CORDICEN;
+}
+
+void fmac_clock_enable(void) {
+    RCC->AHB1ENR |= RCC_AHB1ENR_FMACEN;
+}
+
+void flash_clock_enable(void) {
+    RCC->AHB1ENR |= RCC_AHB1ENR_FLASHEN;
 }
 
 void crc_clock_enable(void) {
@@ -24,43 +36,55 @@ void gpiob_clock_enable(void) {
     RCC->AHB2ENR |= RCC_AHB2ENR_GPIOBEN;
 }
 
-void gpioc_clock_enable(void) {
-    RCC->AHB2ENR |= RCC_AHB2ENR_GPIOCEN;
+void gpiof_clock_enable(void) {
+    RCC->AHB2ENR |= RCC_AHB2ENR_GPIOFEN;
 }
 
-void gpioh_clock_enable(void) {
-    RCC->AHB2ENR |= RCC_AHB2ENR_GPIOHEN;
+void gpiog_clock_enable(void) {
+    RCC->AHB2ENR |= RCC_AHB2ENR_GPIOGEN;
 }
 
-void pka_clock_enable(void) {
-    RCC->AHB3ENR |= RCC_AHB3ENR_PKAEN;
+void adc12_clock_enable(void) {
+    RCC->AHB2ENR |= RCC_AHB2ENR_ADC12EN;
+}
+
+void dac1_clock_enable(void) {
+    RCC->AHB2ENR |= RCC_AHB2ENR_DAC1EN;
+}
+
+void dac3_clock_enable(void) {
+    RCC->AHB2ENR |= RCC_AHB2ENR_DAC3EN;
 }
 
 void aes_clock_enable(void) {
-    RCC->AHB3ENR |= RCC_AHB3ENR_AESEN;
+    RCC->AHB2ENR |= RCC_AHB2ENR_AESEN;
 }
 
 void rng_clock_enable(void) {
-    RCC->AHB3ENR |= RCC_AHB3ENR_RNGEN;
-}
-
-void hsem_clock_enable(void) {
-    RCC->AHB3ENR |= RCC_AHB3ENR_HSEMEN;
-}
-
-void ipcc_clock_enable(void) {
-    RCC->AHB3ENR |= RCC_AHB3ENR_IPCCEN;
-}
-
-void flash_clock_enable(void) {
-    RCC->AHB3ENR |= RCC_AHB3ENR_FLASHEN;
+    RCC->AHB2ENR |= RCC_AHB2ENR_RNGEN;
 }
 
 void tim2_clock_enable(void) {
     RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
 }
 
-void rtcapb_clock_enable(void) {
+void tim3_clock_enable(void) {
+    RCC->APB1ENR1 |= RCC_APB1ENR1_TIM3EN;
+}
+
+void tim4_clock_enable(void) {
+    RCC->APB1ENR1 |= RCC_APB1ENR1_TIM4EN;
+}
+
+void tim6_clock_enable(void) {
+    RCC->APB1ENR1 |= RCC_APB1ENR1_TIM6EN;
+}
+
+void tim7_clock_enable(void) {
+    RCC->APB1ENR1 |= RCC_APB1ENR1_TIM7EN;
+}
+
+void rtc_clock_enable(void) {
     RCC->APB1ENR1 |= RCC_APB1ENR1_RTCAPBEN;
 }
 
@@ -70,6 +94,10 @@ void wwdg_clock_enable(void) {
 
 void spi2_clock_enable(void) {
     RCC->APB1ENR1 |= RCC_APB1ENR1_SPI2EN;
+}
+
+void spi3_clock_enable(void) {
+    RCC->APB1ENR1 |= RCC_APB1ENR1_SPI3EN;
 }
 
 void usart2_clock_enable(void) {
@@ -84,12 +112,20 @@ void i2c2_clock_enable(void) {
     RCC->APB1ENR1 |= RCC_APB1ENR1_I2C2EN;
 }
 
-void i2c3_clock_enable(void) {
-    RCC->APB1ENR1 |= RCC_APB1ENR1_I2C3EN;
+void usb_clock_enable(void) {
+    RCC->APB1ENR1 |= RCC_APB1ENR1_USBEN;
 }
 
-void dac_clock_enable(void) {
-    RCC->APB1ENR1 |= RCC_APB1ENR1_DACEN;
+void fdcan_clock_enable(void) {
+    RCC->APB1ENR1 |= RCC_APB1ENR1_FDCANEN;
+}
+
+void pwr_clock_enable(void) {
+    RCC->APB1ENR1 |= RCC_APB1ENR1_PWREN;
+}
+
+void i2c3_clock_enable(void) {
+    RCC->APB1ENR1 |= RCC_APB1ENR1_I2C3EN;
 }
 
 void lptim1_clock_enable(void) {
@@ -100,16 +136,12 @@ void lpuart1_clock_enable(void) {
     RCC->APB1ENR2 |= RCC_APB1ENR2_LPUART1EN;
 }
 
-void lptim2_clock_enable(void) {
-    RCC->APB1ENR2 |= RCC_APB1ENR2_LPTIM2EN;
+void ucpd1_clock_enable(void) {
+    RCC->APB1ENR2 |= RCC_APB1ENR2_UCPD1EN;
 }
 
-void lptim3_clock_enable(void) {
-    RCC->APB1ENR2 |= RCC_APB1ENR2_LPTIM3EN;
-}
-
-void adc_clock_enable(void) {
-    RCC->APB2ENR |= RCC_APB2ENR_ADCEN;
+void syscfg_clock_enable(void) {
+    RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
 }
 
 void tim1_clock_enable(void) {
@@ -120,8 +152,16 @@ void spi1_clock_enable(void) {
     RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
 }
 
+void tim8_clock_enable(void) {
+    RCC->APB2ENR |= RCC_APB2ENR_TIM8EN;
+}
+
 void usart1_clock_enable(void) {
     RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
+}
+
+void tim15_clock_enable(void) {
+    RCC->APB2ENR |= RCC_APB2ENR_TIM15EN;
 }
 
 void tim16_clock_enable(void) {
@@ -132,7 +172,7 @@ void tim17_clock_enable(void) {
     RCC->APB2ENR |= RCC_APB2ENR_TIM17EN;
 }
 
-void subghzspi_clock_enable(void) {
-    RCC->APB3ENR |= RCC_APB3ENR_SUBGHZSPIEN;
+void sai1_clock_enable(void) {
+    RCC->APB2ENR |= RCC_APB2ENR_SAI1EN;
 }
 

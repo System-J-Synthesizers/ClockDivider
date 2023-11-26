@@ -3,26 +3,30 @@
 
 #include "hal_gpio.h"
 #include "hal_timer.h"
-#include "stm32wl55xx.h"
+#include "stm32g441xx.h"
 
-/* NOTE: This is WL55 config */
+#define STACK_SIZE 64U
+
+#define SEVEN_SEG_PRIORITY 0U
+#define DIVIDER_PRIORITY 1U
+#define STATE_MACHINE_PRIORITY 2U
 
 /* channel LED mux select pins */
-#define LED_SEL0 (PORT_B | 15U)
-#define LED_SEL1 (PORT_B | 9U)
+#define LED_SEL0 (PORT_F | 0U)
+#define LED_SEL1 (PORT_F | 1U)
 
 /* 7 segment display segment LEDs */
-#define DISP_QA  (PORT_C | 2U)
-#define DISP_QB  (PORT_C | 1U)
-#define DISP_QC  (PORT_A | 7U)
-#define DISP_QD  (PORT_A | 4U)
-#define DISP_QE  (PORT_A | 9U)
-#define DISP_QF  (PORT_A | 5U)
-#define DISP_QG  (PORT_A | 6U)
+#define DISP_QA  (PORT_A | 7U)
+#define DISP_QB  (PORT_B | 0U)
+#define DISP_QC  (PORT_A | 2U)
+#define DISP_QD  (PORT_A | 5U)
+#define DISP_QE  (PORT_A | 0U)
+#define DISP_QF  (PORT_A | 6U)
+#define DISP_QG  (PORT_A | 1U)
 
 /* 7 segment display enable pins */
-#define TENS_SEL  (PORT_A | 11U)
-#define ONES_SEL  (PORT_A | 12U)
+#define TENS_SEL  (PORT_A | 3U)
+#define ONES_SEL  (PORT_A | 4U)
 
 /* 
  * Timers for different events:
@@ -33,17 +37,45 @@
 #define BUTTON_TIMER TIMER17
 
 /* Timer settings (prescale / period etc) */
-#define SEGMENT_TIMER_PRESCALER 4U /* 4MHz / 4 == 1MHz */
-#define SEGMENT_TIMER_PERIOD 1500U /* (1/1MHz) * 1500 == 666Hz */
-#define SEGMENT_TIMER_IRQ TIM16_IRQn
+#define SEGMENT_TIMER_PRESCALER 16U
+#define SEGMENT_TIMER_PERIOD 1190U
+#define SEGMENT_TIMER_IRQ TIM1_UP_TIM16_IRQn
 
-#define BUTTON_TIMER_PRESCALER 4U /* 4MHz / 4 == 1MHz */
+#define BUTTON_TIMER_PRESCALER 16U /* 4MHz / 4 == 1MHz */
 #define BUTTON_TIMER_PERIOD 50000U /* (1/1MHz) * 50000 == 50Hz */
-#define BUTTON_TIMER_IRQ TIM17_IRQn
+#define BUTTON_TIMER_IRQ TIM1_TRG_COM_TIM17_IRQn
 
 /* Button input pins */
 #define NUM_BUTTONS 2U
-#define DIVISION_BUTTON (PORT_B | 7U)
-#define CHANNEL_BUTTON 	(PORT_B | 6U)
+#define CHANNEL_BUTTON  (PORT_B | 7U)
+#define DIVISION_BUTTON (PORT_B | 6U)
+
+/* DIN Sync pins */
+#define START_STOP_PIN (PORT_A | 10U)
+#define CH1_CLKIN_PIN (PORT_A | 11U)  /* TIM4 */
+#define CH2_CLKIN_PIN (PORT_B | 4U)   /* TIM3 */
+#define CH3_CLKIN_PIN (PORT_A | 15U)  /* TIM2 */
+#define CH4_CLKIN_PIN (PORT_A | 8U)   /* TIM1 */
+#define CH1_CLKOUT_PIN (PORT_A | 12U) /* TIM4 */
+#define CH2_CLKOUT_PIN (PORT_B | 5U)  /* TIM3 */
+#define CH3_CLKOUT_PIN (PORT_B | 3U)  /* TIM2 */
+#define CH4_CLKOUT_PIN (PORT_A | 9U)  /* TIM1 */
+
+/* DIN Sync timers */
+#define CH1_TIMER TIMER4
+#define CH2_TIMER TIMER3
+#define CH3_TIMER TIMER2
+#define CH4_TIMER TIMER1
+
+/* DIN Sync timer channels */
+#define CH1_CLKIN TIMER4_CH1
+#define CH2_CLKIN TIMER3_CH1
+#define CH3_CLKIN TIMER2_CH1
+#define CH4_CLKIN TIMER1_CH1
+
+#define CH1_CLKOUT TIMER4_CH2
+#define CH2_CLKOUT TIMER3_CH2
+#define CH3_CLKOUT TIMER2_CH2
+#define CH4_CLKOUT TIMER1_CH2
 
 #endif /* HAL_CONFIG_H */

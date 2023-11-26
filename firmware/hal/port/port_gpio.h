@@ -3,10 +3,11 @@
 
 #include <stdint.h>
 
-#define NUM_PORTS 3U
+#define NUM_PORTS 4U
 #define PORT_A 0x00U
 #define PORT_B 0x10U
-#define PORT_C 0x20U
+#define PORT_F 0x20U
+#define PORT_G 0x20U
 
 #define GPIO_MODE_AF0		0x00U
 #define GPIO_MODE_AF1		0x01U

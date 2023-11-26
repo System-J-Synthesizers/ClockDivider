@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "stm32wl55xx.h"
+#include "stm32g441xx.h"
 #include "port_gpio.h"
 #include "../hal_gpio.h"
 #include "../hal_assert.h"
@@ -14,7 +14,7 @@
 /**
  * Array of available GPIO ports
  */
-static GPIO_TypeDef *gpio_ports[NUM_PORTS] = {GPIOA, GPIOB, GPIOC};
+static GPIO_TypeDef *gpio_ports[NUM_PORTS] = {GPIOA, GPIOB, GPIOF, GPIOG};
 
 /**
  * @brief      Internal helper translates a pin number to EXTICRn register 
@@ -235,21 +235,21 @@ void gpio_config_pin(uint8_t pin, uint16_t config) {
 
 	switch(GPIO_GET_ISRS(config)) {
 		case GPIO_INT_RISING:
-			SYSCFG->EXTICR[exti_index] |= ((port_num << 1U) << (exti_pin * 4U));
+			SYSCFG->EXTICR[exti_index] |= (port_num << (exti_pin * 4U));
 			EXTI->RTSR1 |= (1U << pin_num);
 			EXTI->IMR1 |= (1U << pin_num);
 			gpio_nvic_enable(pin_num);
 		break;
 
 		case GPIO_INT_FALLING:
-			SYSCFG->EXTICR[exti_index] |= ((port_num << 1U) << (exti_pin * 4U));
+			SYSCFG->EXTICR[exti_index] |= (port_num << (exti_pin * 4U));
 			EXTI->FTSR1 |= (1U << pin_num);
 			EXTI->IMR1 |= (1U << pin_num);
 			gpio_nvic_enable(pin_num);
 		break;
 
 		case GPIO_INT_BOTH:
-			SYSCFG->EXTICR[exti_index] |= ((port_num << 1U) << (exti_pin * 4U));
+			SYSCFG->EXTICR[exti_index] |= (port_num << (exti_pin * 4U));
 			EXTI->RTSR1 |= (1U << pin_num);
 			EXTI->FTSR1 |= (1U << pin_num);
 			EXTI->IMR1 |= (1U << pin_num);

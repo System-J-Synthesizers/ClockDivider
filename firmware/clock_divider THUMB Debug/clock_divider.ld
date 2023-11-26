@@ -1,63 +1,91 @@
 MEMORY
 {
   UNPLACED_SECTIONS (wx) : ORIGIN = 0x100000000, LENGTH = 0
-  FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 0x00040000
-  SRAM2 (wx) : ORIGIN = 0x10000000, LENGTH = 0x00008000
-  SYSTEM (wx) : ORIGIN = 0x1fff0000, LENGTH = 0x00007000
+  FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 0x00020000
+  CCMSRAM (wx) : ORIGIN = 0x10000000, LENGTH = 0x00002800
+  SYSTEM_BANK1 (wx) : ORIGIN = 0x1fff0000, LENGTH = 0x00007000
   OTP (wx) : ORIGIN = 0x1fff7000, LENGTH = 0x00000400
-  ENGINEERING_BYTES (wx) : ORIGIN = 0x1fff7400, LENGTH = 0x00000400
-  OPTION_BYTES (wx) : ORIGIN = 0x1fff7800, LENGTH = 0x00000800
-  RAM (wx) : ORIGIN = 0x20000000, LENGTH = 0x00010000
-  APB1 (wx) : ORIGIN = 0x40000000, LENGTH = 0x0000b400
-  APB2 (wx) : ORIGIN = 0x40010000, LENGTH = 0x00004c00
-  AHB1 (wx) : ORIGIN = 0x40020000, LENGTH = 0x00600000
-  AHB2 (wx) : ORIGIN = 0x48000000, LENGTH = 0x00002000
-  AHB3 (wx) : ORIGIN = 0x58000000, LENGTH = 0x00004400
-  APB3 (wx) : ORIGIN = 0x58010000, LENGTH = 0x00000400
+  OPTION_BANK1 (wx) : ORIGIN = 0x1fff7800, LENGTH = 0x00000030
+  RAM (wx) : ORIGIN = 0x20000000, LENGTH = 0x00005800
+  SRAM1 (wx) : ORIGIN = 0x20000000, LENGTH = 0x00004000
+  SRAM2 (wx) : ORIGIN = 0x20004000, LENGTH = 0x00001800
+  ABP1 (wx) : ORIGIN = 0x40000000, LENGTH = 0x00009800
+  ABP2 (wx) : ORIGIN = 0x40010000, LENGTH = 0x00006400
+  AHB1 (wx) : ORIGIN = 0x40020000, LENGTH = 0x00004400
+  AHB2 (wx) : ORIGIN = 0x48000000, LENGTH = 0x08060c00
+  NOR_PSRAM1 (wx) : ORIGIN = 0x60000000, LENGTH = 0x00000000
+  NOR_PSRAM2 (wx) : ORIGIN = 0x64000000, LENGTH = 0x00000000
+  NOR_PSRAM3 (wx) : ORIGIN = 0x68000000, LENGTH = 0x00000000
+  NOR_PSRAM4 (wx) : ORIGIN = 0x6c000000, LENGTH = 0x00000000
+  NAND (rx) : ORIGIN = 0x80000000, LENGTH = 0x00000000
+  QUADSPI_FLASH (rx) : ORIGIN = 0x90000000, LENGTH = 0x00000000
+  FMC (wx) : ORIGIN = 0xa0000000, LENGTH = 0x00001000
+  QUADSPI (wx) : ORIGIN = 0xa0001000, LENGTH = 0x00000400
   PPB (wx) : ORIGIN = 0xe0000000, LENGTH = 0x00100000
 }
 
 SECTIONS
 {
   __FLASH_segment_start__ = 0x08000000;
-  __FLASH_segment_end__ = 0x08040000;
-  __FLASH_segment_size__ = 0x00040000;
-  __SRAM2_segment_start__ = 0x10000000;
-  __SRAM2_segment_end__ = 0x10008000;
-  __SRAM2_segment_size__ = 0x00008000;
-  __SYSTEM_segment_start__ = 0x1fff0000;
-  __SYSTEM_segment_end__ = 0x1fff7000;
-  __SYSTEM_segment_size__ = 0x00007000;
+  __FLASH_segment_end__ = 0x08020000;
+  __FLASH_segment_size__ = 0x00020000;
+  __CCMSRAM_segment_start__ = 0x10000000;
+  __CCMSRAM_segment_end__ = 0x10002800;
+  __CCMSRAM_segment_size__ = 0x00002800;
+  __SYSTEM_BANK1_segment_start__ = 0x1fff0000;
+  __SYSTEM_BANK1_segment_end__ = 0x1fff7000;
+  __SYSTEM_BANK1_segment_size__ = 0x00007000;
   __OTP_segment_start__ = 0x1fff7000;
   __OTP_segment_end__ = 0x1fff7400;
   __OTP_segment_size__ = 0x00000400;
-  __ENGINEERING_BYTES_segment_start__ = 0x1fff7400;
-  __ENGINEERING_BYTES_segment_end__ = 0x1fff7800;
-  __ENGINEERING_BYTES_segment_size__ = 0x00000400;
-  __OPTION_BYTES_segment_start__ = 0x1fff7800;
-  __OPTION_BYTES_segment_end__ = 0x1fff8000;
-  __OPTION_BYTES_segment_size__ = 0x00000800;
+  __OPTION_BANK1_segment_start__ = 0x1fff7800;
+  __OPTION_BANK1_segment_end__ = 0x1fff7830;
+  __OPTION_BANK1_segment_size__ = 0x00000030;
   __RAM_segment_start__ = 0x20000000;
-  __RAM_segment_end__ = 0x20010000;
-  __RAM_segment_size__ = 0x00010000;
-  __APB1_segment_start__ = 0x40000000;
-  __APB1_segment_end__ = 0x4000b400;
-  __APB1_segment_size__ = 0x0000b400;
-  __APB2_segment_start__ = 0x40010000;
-  __APB2_segment_end__ = 0x40014c00;
-  __APB2_segment_size__ = 0x00004c00;
+  __RAM_segment_end__ = 0x20005800;
+  __RAM_segment_size__ = 0x00005800;
+  __SRAM1_segment_start__ = 0x20000000;
+  __SRAM1_segment_end__ = 0x20004000;
+  __SRAM1_segment_size__ = 0x00004000;
+  __SRAM2_segment_start__ = 0x20004000;
+  __SRAM2_segment_end__ = 0x20005800;
+  __SRAM2_segment_size__ = 0x00001800;
+  __ABP1_segment_start__ = 0x40000000;
+  __ABP1_segment_end__ = 0x40009800;
+  __ABP1_segment_size__ = 0x00009800;
+  __ABP2_segment_start__ = 0x40010000;
+  __ABP2_segment_end__ = 0x40016400;
+  __ABP2_segment_size__ = 0x00006400;
   __AHB1_segment_start__ = 0x40020000;
-  __AHB1_segment_end__ = 0x40620000;
-  __AHB1_segment_size__ = 0x00600000;
+  __AHB1_segment_end__ = 0x40024400;
+  __AHB1_segment_size__ = 0x00004400;
   __AHB2_segment_start__ = 0x48000000;
-  __AHB2_segment_end__ = 0x48002000;
-  __AHB2_segment_size__ = 0x00002000;
-  __AHB3_segment_start__ = 0x58000000;
-  __AHB3_segment_end__ = 0x58004400;
-  __AHB3_segment_size__ = 0x00004400;
-  __APB3_segment_start__ = 0x58010000;
-  __APB3_segment_end__ = 0x58010400;
-  __APB3_segment_size__ = 0x00000400;
+  __AHB2_segment_end__ = 0x50060c00;
+  __AHB2_segment_size__ = 0x08060c00;
+  __NOR_PSRAM1_segment_start__ = 0x60000000;
+  __NOR_PSRAM1_segment_end__ = 0x60000000;
+  __NOR_PSRAM1_segment_size__ = 0x00000000;
+  __NOR_PSRAM2_segment_start__ = 0x64000000;
+  __NOR_PSRAM2_segment_end__ = 0x64000000;
+  __NOR_PSRAM2_segment_size__ = 0x00000000;
+  __NOR_PSRAM3_segment_start__ = 0x68000000;
+  __NOR_PSRAM3_segment_end__ = 0x68000000;
+  __NOR_PSRAM3_segment_size__ = 0x00000000;
+  __NOR_PSRAM4_segment_start__ = 0x6c000000;
+  __NOR_PSRAM4_segment_end__ = 0x6c000000;
+  __NOR_PSRAM4_segment_size__ = 0x00000000;
+  __NAND_segment_start__ = 0x80000000;
+  __NAND_segment_end__ = 0x80000000;
+  __NAND_segment_size__ = 0x00000000;
+  __QUADSPI_FLASH_segment_start__ = 0x90000000;
+  __QUADSPI_FLASH_segment_end__ = 0x90000000;
+  __QUADSPI_FLASH_segment_size__ = 0x00000000;
+  __FMC_segment_start__ = 0xa0000000;
+  __FMC_segment_end__ = 0xa0001000;
+  __FMC_segment_size__ = 0x00001000;
+  __QUADSPI_segment_start__ = 0xa0001000;
+  __QUADSPI_segment_end__ = 0xa0001400;
+  __QUADSPI_segment_size__ = 0x00000400;
   __PPB_segment_start__ = 0xe0000000;
   __PPB_segment_end__ = 0xe0100000;
   __PPB_segment_size__ = 0x00100000;
@@ -70,6 +98,21 @@ SECTIONS
   __STACKSIZE_SVC__ = 0;
   __STACKSIZE_UND__ = 0;
   __STACKSIZE__ = 256;
+
+  __qspi_load_start__ = ALIGN(__QUADSPI_FLASH_segment_start__ , 4);
+  .qspi ALIGN(__QUADSPI_FLASH_segment_start__ , 4) : AT(ALIGN(__QUADSPI_FLASH_segment_start__ , 4))
+  {
+    __qspi_start__ = .;
+    *(.qspi .qspi.*)
+  }
+  __qspi_end__ = __qspi_start__ + SIZEOF(.qspi);
+  __qspi_size__ = SIZEOF(.qspi);
+  __qspi_load_end__ = __qspi_end__;
+
+  __QUADSPI_FLASH_segment_used_end__ = ALIGN(__QUADSPI_FLASH_segment_start__ , 4) + SIZEOF(.qspi);
+  __QUADSPI_FLASH_segment_used_size__ = __QUADSPI_FLASH_segment_used_end__ - __QUADSPI_FLASH_segment_start__;
+
+  . = ASSERT(__qspi_start__ == __qspi_end__ || (__qspi_end__ - __QUADSPI_FLASH_segment_start__) <= __QUADSPI_FLASH_segment_size__ , "error: .qspi is too large to fit in QUADSPI_FLASH memory segment");
 
   __vectors_ram_load_start__ = ALIGN(__RAM_segment_start__ , 256);
   .vectors_ram ALIGN(__RAM_segment_start__ , 256) (NOLOAD) : AT(ALIGN(__RAM_segment_start__ , 256))
