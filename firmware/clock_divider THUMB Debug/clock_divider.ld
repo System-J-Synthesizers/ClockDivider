@@ -98,6 +98,9 @@ SECTIONS
   __STACKSIZE_SVC__ = 0;
   __STACKSIZE_UND__ = 0;
   __STACKSIZE__ = 256;
+  __do_debug_operation = __do_debug_operation_mempoll;
+  __vfprintf = __vfprintf_float_long_long;
+  __vfscanf = __vfscanf_float_long_long_cc;
 
   __qspi_load_start__ = ALIGN(__QUADSPI_FLASH_segment_start__ , 4);
   .qspi ALIGN(__QUADSPI_FLASH_segment_start__ , 4) : AT(ALIGN(__QUADSPI_FLASH_segment_start__ , 4))

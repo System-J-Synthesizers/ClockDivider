@@ -23,11 +23,14 @@ static os_tcb *div_task;
 static uint32_t div_stack[STACK_SIZE];
 static os_event *div_evtq[STACK_SIZE];
 
-#define CLK_IN_EVENT 1U
-#define START_EVENT 2U
-#define STOP_EVENT 3U
+#define RISING_EVENT 1U
+#define FALLING_EVENT 2U
+#define START_EVENT 3U
+#define STOP_EVENT 4U
 
-static os_event edge_evt = {CLK_IN_EVENT};
+static os_event rising_evt = {RISING_EVENT};
+static os_event falling_evt = {FALLING_EVENT};
+
 static os_event start_evt = {START_EVENT};
 static os_event stop_evt = {STOP_EVENT};
 
@@ -35,6 +38,10 @@ static os_event stop_evt = {STOP_EVENT};
 #define DIV_ENABLED 1U
 
 static uint8_t div_state = DIV_DISABLED;
+
+uint8_t tmp = 1U;
+
+bool first_rising_edge = false;
 
 void divider_dispatch(os_tcb *task, os_event const *const e) {
   if(e->e_sig == INIT_SIG) {
@@ -63,20 +70,37 @@ void divider_dispatch(os_tcb *task, os_event const *const e) {
 
       case STOP_EVENT:
         div_state = DIV_DISABLED;
+        first_rising_edge = false;
         for(uint8_t i = 0U; i < NUM_CHANNELS; i++) {
-          ch_count[i] = 0U;
+          ch_count[i] = get_division(i);
           gpio_reset(ch_pin[i]);
         }
       break;
 
-      case CLK_IN_EVENT:
+      case RISING_EVENT:
         if(div_state == DIV_ENABLED) {
-          for(uint8_t i = 0U; i < NUM_CHANNELS; i++) {
-            ch_count[i]++;
+          if(first_rising_edge == false) {
+            first_rising_edge = true;
+          }
+
+          for(uint8_t i = 0U; i < NUM_CHANNELS; i++) {          
             if(ch_count[i] >= get_division(i)) {
               gpio_toggle(ch_pin[i]);
               ch_count[i] = 0U;
             }
+            ch_count[i]++;
+          }
+        }
+      break;
+
+      case FALLING_EVENT:
+        if((div_state == DIV_ENABLED) && (first_rising_edge == true)) {
+          for(uint8_t i = 0U; i < NUM_CHANNELS; i++) {          
+            if(ch_count[i] >= get_division(i)) {
+              gpio_toggle(ch_pin[i]);
+              ch_count[i] = 0U;
+            }
+            ch_count[i]++;
           }
         }
       break;
@@ -95,7 +119,12 @@ void divider_init(void) {
 
 void EXTI4_IRQHandler(void) {
   gpio_clear_isr_flag(CH2_CLKIN_PIN);
-  os_evtq_post(div_task, &edge_evt);
+  
+  if(gpio_get(CH2_CLKIN_PIN) == 1U) {
+    os_evtq_post(div_task, &rising_evt);
+  } else {
+    os_evtq_post(div_task, &falling_evt);
+  }
 }
 
 void EXTI15_10_IRQHandler(void) {
